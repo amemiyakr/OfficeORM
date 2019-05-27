@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.example.event.domain">
+	<class name="User" table="usertable">
+		<id name="userId" column="user_id">
+			<generator class="native" />
+		</id>
+		<property name="loginId" column="login_id" type="string" />
+		<property name="pass" column="pass" type="string" />
+		<property name="userName" column="user_name" type="string" />
+		<many-to-one name="type" column="type_id" />
+		<many-to-one name="group" column="group_id" />
+		<property name="createdate" column="createdate" type="timestamp" />
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.example.event.domain">
+	<class name="Event" table="eventtable">
+		<id name="eventId" column="event_id">
+			<generator class="native" />
+		</id>
+		<property name="title" column="title" type="string" />
+		<property name="startdate" column="startdate" type="timestamp" />
+		<property name="enddate" column="enddate" type="timestamp" />
+		<property name="place" column="place" type="string" />
+		<many-to-one name="group" column="group_id" />
+		<property name="details" column="details" type="string" />
+		<many-to-one name="user" column="user_id" />
+		<property name="createdate" column="createdate" type="timestamp" />
+	</class>
+</hibernate-mapping>

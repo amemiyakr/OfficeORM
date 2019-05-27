@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.example.event.domain">
+	<class name="Type" table="typetable">
+		<id name="typeId" column="type_id">
+			<generator class="native" />
+		</id>
+		<property name="typeName" column="type_name" type="string"/>
+
+	</class>
+</hibernate-mapping>
