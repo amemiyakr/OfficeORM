@@ -25,11 +25,11 @@
 					</tr>
 					<tr>
 						<th>開始日時</th>
-						<td><c:out value="${event.startdate}" /></td>
+						<td><fmt:formatDate value="${event.startdate}" pattern="yyyy年MM月dd日(E) HH時mm分" /></td>
 					</tr>
 					<tr>
 						<th>終了日時</th>
-						<td><c:out value="${event.enddate}" /></td>
+						<td><fmt:formatDate value="${event.enddate}" pattern="yyyy年MM月dd日(E) HH時mm分" /></td>
 					</tr>
 					<tr>
 						<th>場所</th>
@@ -37,7 +37,7 @@
 					</tr>
 					<tr>
 						<th>対象グループ</th>
-						<td><c:out value="${event.group}" /></td>
+						<td><c:out value="${event.group.groupName}" /></td>
 					</tr>
 					<tr>
 						<th>詳細</th>
@@ -49,6 +49,12 @@
 					</tr>
 					<!-- TODO: 参加者の項目を追加する -->
 				</table>
+				<!-- TODO: 参加の有無やログインユーザーの種別などに応じて、必要なボタンのみ表示する -->
+				<a href="#" class="btn btn-primary">一覧に戻る</a>
+				<a href="#" class="btn btn-info">参加する</a>
+				<a href="#" class="btn btn-warning">参加を取り消す</a>
+				<a href="#" class="btn btn-default">編集</a>
+				<a href="#" class="btn btn-danger">削除</a>
 			</div>
 		</div>
 	</div>

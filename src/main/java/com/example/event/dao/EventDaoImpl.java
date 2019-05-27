@@ -27,20 +27,38 @@ public class EventDaoImpl extends BaseDao implements EventDao {
 				.list();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Event> page(int page) throws Exception {//Eventテーブルを5件分持ってくる
+		// page = 1 -> 0
+		// page = 2 -> 5
+		// page = 3 -> 10
+		// page = n -> (n - 1) * 5
+		page=(page-1)*5;
+		return getSession().createCriteria(Event.class)
+				.setFirstResult(page)
+				.setMaxResults(5)
+				.setFetchMode("group", FetchMode.JOIN)
+				.addOrder(Order.desc("startdate"))
+				.list();
+	}
+
+
+
 	@Override
 	public Event findById(Integer id) throws Exception {
 		return (Event) getSession().createCriteria(Event.class)
-				.setFetchMode("grouptable", FetchMode.JOIN)
-				.setFetchMode("usertable", FetchMode.JOIN)
-				.setFetchMode("jointable", FetchMode.JOIN)
+				.setFetchMode("group", FetchMode.JOIN)
+				.setFetchMode("user", FetchMode.JOIN)
+				.setFetchMode("join", FetchMode.JOIN)
 				.add(Restrictions.eq("eventId", id))
 				.uniqueResult();
 	}
 
 	@Override
 	public void insert(Event event) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
-
+		event.setCreatedate(new Date());
+		getSession().save(event);
 	}
 
 	@Override
@@ -69,6 +87,5 @@ public class EventDaoImpl extends BaseDao implements EventDao {
 				.add(Restrictions.lt("startdate", todayOfStart))
 				.list();
 	}
-
 
 }

@@ -23,11 +23,39 @@
 		<div class="row">
 			<div class="col-md-12">
 				<ul class="pagination nav navbar-nav navbar-right">
-					<li><a href="#">&laquo;</a></li>
-					<li><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">&raquo;</a></li>
+
+					<c:choose><%-- <<ボタン --%>
+						<c:when test="${1 == page}">
+							<li class=disabled><a href="">&laquo;</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a href="?p=<c:out value="${page-1}"/>">&laquo;</a></li>
+						</c:otherwise>
+					</c:choose>
+
+					<c:forEach var="Pages" begin="1" end="${numPages}">
+
+					<c:choose><%-- ページボタン --%>
+						<c:when test="${Pages == page}">
+							<li class="active"><a href="?p=${Pages}">${Pages}</a></li>
+						</c:when>
+						<c:otherwise>
+							<li ><a href="?p=${Pages}">${Pages}</a></li>
+						</c:otherwise>
+					</c:choose>
+
+					</c:forEach>
+
+					<c:choose><%-- >>ボタン --%>
+						<c:when test="${numPages == page}">
+							<li class=disabled><a href="">&raquo;</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a href="?p=<c:out value="${page+1}"/>">&raquo;</a></li>
+						</c:otherwise>
+					</c:choose>
+
+
 				</ul>
 				<table class="table table-bordered ">
 					<tr>
@@ -37,25 +65,25 @@
 						<th>対象グループ</th>
 						<th>詳細</th>
 					</tr>
-					<c:forEach items="${eventList}" var="event">
+					<c:forEach items="${needList}" var="event">
 						<tr>
 							<td>
 								<c:out value="${event.title}" />
 								<c:forEach items="${joinList}" var="join">
-									<c:if test="${join.event.eventId} == ${event.eventId} && ${join.user.userId} == ${sessionScope.LoginId}">
+									<c:if test="${join.event.eventId == event.eventId && join.user.userId == userId }">
 										<input type="submit" class="btn btn-danger" value="参加" disabled>
 									</c:if>
 								</c:forEach>
 							</td>
-							<td><fmt:formatDate value="${event.startdate }" pattern="yyyy年MM月dd日(E) HH時mm分" /></td>
+							<td><fmt:formatDate value="${event.startdate }" pattern="yyyy年MM月dd日(E) HH時mm分ss" /></td>
 							<td><c:out value="${event.place}" /></td>
 							<td><c:out value="${event.group.groupName}" /></td>
-							<td><a href="#" class="btn btn-default">詳細</a></td>
+							<td><a href="detailsEvent/<c:out value="${event.eventId}" />" class="btn btn-default" >詳細</a></td>
 						</tr>
 					</c:forEach>
 				</table>
 				<p>
-					<a href="#" class="btn btn-primary">イベントの登録</a>
+					<a href="addEvent" class="btn btn-primary">イベントの登録</a>
 				</p>
 			</div>
 		</div>

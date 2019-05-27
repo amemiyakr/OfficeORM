@@ -12,5 +12,6 @@ public interface EventDao {
 	void insert (Event event)throws Exception;
 	void update (Event event)throws Exception;
 	void delete (Event event)throws Exception;
+	List<Event> page(int page) throws Exception;
 
 }

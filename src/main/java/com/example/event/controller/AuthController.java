@@ -35,7 +35,10 @@ public class AuthController {
 		if(!errors.hasErrors()) {
 			user = userDao.findByLoginIdAndLoginPass(user.getLoginId(), user.getPass());
 			if(user != null){
+				session.setAttribute("userId", user.getUserId());
 				session.setAttribute("loginId", user.getLoginId());
+				session.setAttribute("userName", user.getUserName());
+				session.setAttribute("typeId", user.getType());
 				return "redirect:/eventList";
 			}else {
 				errors.reject("errors.login");

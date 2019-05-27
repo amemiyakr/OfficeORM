@@ -5,7 +5,7 @@
 <c:if test="${pagedListHolder.pageCount > 1}">
   <ul class="pagination">
 <c:if test="${!pagedListHolder.firstPage}">
-    <li><a href="<%= StringUtils.replace(pagedLink, "~", String.valueOf(pagedListHolder.getPage()-1)) %>">Prev</a></li>
+    <li><a href="<%= StringUtils.replace(pagedLink, "~", String.valueOf(pagedListHolder.getPage()-1)) %>"><<</a></li>
 </c:if>
 <c:if test="${pagedListHolder.firstLinkedPage > 0}">
     <li><a href="<%= StringUtils.replace(pagedLink, "~", "0") %>">1</a></li>
@@ -32,7 +32,7 @@
     <li><a href="<%= StringUtils.replace(pagedLink, "~", String.valueOf(pagedListHolder.getPageCount()-1)) %>">${pagedListHolder.pageCount}</a></li>
 </c:if>
 <c:if test="${!pagedListHolder.lastPage}">
-    <li><a href="<%= StringUtils.replace(pagedLink, "~", String.valueOf(pagedListHolder.getPage()+1)) %>">Next</a></li>
+    <li><a href="<%= StringUtils.replace(pagedLink, "~", String.valueOf(pagedListHolder.getPage()+1)) %>">>></a></li>
 </c:if>
   </ul>
 </c:if>

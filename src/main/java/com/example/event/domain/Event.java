@@ -2,14 +2,22 @@ package com.example.event.domain;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 public class Event {
 	private Integer eventId;
+	@NotBlank
 	private String title;
+	@NotNull
 	private Date startdate;
 	private Date enddate;
+	@NotBlank
 	private String place;
 	private Group group;
 	private String details;
+	@NotNull
 	private User user;
 	private Date createdate;
 

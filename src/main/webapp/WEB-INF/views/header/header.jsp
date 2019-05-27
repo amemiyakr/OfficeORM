@@ -10,11 +10,11 @@
 				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<p class="text-primary">
+
 				<a class="navbar-brand" href="#">
-					<strong>Event Manager</strong>
+					<p class="text-primary"><strong>Event Manager</strong></p>
 				</a>
-			</p>
+
 		</div>
 
 

@@ -17,12 +17,14 @@
 	<div class="container">
 		<c:import url="header/header.jsp" />
 		<h1>本日のイベント</h1>
-		<c:url value="/sample/pagenation/" var="pagedLink">
+		<c:set value="${pagedListHolder}" var="todayList" />
+		<c:url value="/todayEvent" var="pagedLink">
 			<c:param name="p" value="~" />
 		</c:url>
-		<tg:pagenation pagedListHolder="${pagedListHolder}"
-			pagedLink="${pagedLink}" />
-
+		<div class="pull-right">
+			<tg:pagenation pagedListHolder="${pagedListHolder}"
+				pagedLink="${pagedLink}"></tg:pagenation>
+		</div>
 		<table class="table table-bordered">
 			<tr>
 				<th>タイトル</th>
@@ -31,7 +33,7 @@
 				<th>対象グループ</th>
 				<th>詳細</th>
 			</tr>
-			<c:forEach items="${todayList }" var="event">
+			<c:forEach items="${todayList.pageList }" var="event">
 				<tr>
 					<td><c:out value="${event.title }" /></td>
 					<td><fmt:formatDate value="${event.startdate }"
@@ -43,6 +45,10 @@
 				</tr>
 			</c:forEach>
 		</table>
+		<div class="pull-right">
+			<tg:pagenation pagedListHolder="${pagedListHolder}"
+				pagedLink="${pagedLink}"></tg:pagenation>
+		</div>
 	</div>
 	<script src="<spring:url value="/js/jquery-2.2.4.min.js" />"></script>
 	<script src="<spring:url value="/js/bootstrap.min.js" />"></script>
