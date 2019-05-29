@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -63,29 +64,66 @@ public class EventDaoImpl extends BaseDao implements EventDao {
 
 	@Override
 	public void update(Event event) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
+		event.setCreatedate(new Date());
+		getSession().update(event);
 
 	}
 
 	@Override
 	public void delete(Event event) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
+		getSession().delete(event);
 
 	}
 
 	@SuppressWarnings("unchecked") //ワーニングを出ないようにするアノテーション
 	@Override
-	public List<Event> findEventOfToday() throws Exception {
-		Date today = new Date();
+	public List<Event> findEventOfTodaypage(Date todayOfStart, Date todayOfEnd, int page) throws Exception {
+		Date today = todayOfStart;
 		Calendar calendar = new GregorianCalendar();
-		calendar.setTime(today);
+		calendar.setTime(todayOfStart);
 		calendar.add(calendar.DATE, 1);
-		Date todayOfStart = calendar.getTime();
+		todayOfStart = calendar.getTime();
+		page=(page-1)*5;
 		return getSession().createCriteria(Event.class)
+				.setFirstResult(page)
+				.setMaxResults(5)
 				.setFetchMode("group", FetchMode.JOIN)
-				.add(Restrictions.ge("enddate", today))
-				.add(Restrictions.lt("startdate", todayOfStart))
+				.addOrder(Order.desc("startdate"))
+				.add(Restrictions.between("enddate", today, todayOfEnd))
+				.add(Restrictions.le("startdate", todayOfStart))
 				.list();
 	}
+
+	@SuppressWarnings("unchecked") //ワーニングを出ないようにするアノテーション
+	@Override
+	public List<Event> findEventOfToday(Date todayOfStart, Date todayOfEnd) throws Exception {
+		Date today = todayOfStart;
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(todayOfStart);
+		calendar.add(calendar.DATE, 1);
+		todayOfStart = calendar.getTime();
+		return getSession().createCriteria(Event.class)
+				.setFetchMode("group", FetchMode.JOIN)
+				.addOrder(Order.desc("startdate"))
+				.add(Restrictions.between("enddate", today, todayOfEnd))
+				.add(Restrictions.le("startdate", todayOfStart))
+				.list();
+	}
+
+
+	@SuppressWarnings("unchecked") //ワーニングを出ないようにするアノテーション
+	@Override
+	public Date findMaxEndDateOfEvent() throws Exception {
+		Date maxEndDay = (Date) getSession().createCriteria(Event.class)
+				.setProjection(Projections.max("enddate"))
+				.uniqueResult();
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(maxEndDay);
+		calendar.add(calendar.DATE, 1);
+		maxEndDay = calendar.getTime();
+		return maxEndDay;
+	}
+
+
 
 }

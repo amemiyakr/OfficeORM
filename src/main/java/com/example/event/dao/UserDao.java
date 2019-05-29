@@ -18,4 +18,6 @@ public interface UserDao {
 
 	User findByLoginIdAndLoginPass(String loginId, String loginPass ) throws Exception;
 
+	List<User> needpage(int page) throws Exception;
+
 }

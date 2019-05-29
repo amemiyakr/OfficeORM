@@ -22,7 +22,7 @@
 			<ul class="nav navbar-nav">
 				<li><a href="todayEvent">本日のイベント</a></li>
 				<li><a href="#">イベント管理</a></li>
-				<li><a href="#">ユーザー管理</a></li>
+				<li><a href="userList">ユーザー管理</a></li>
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">

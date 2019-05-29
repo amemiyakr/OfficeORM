@@ -10,7 +10,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -50,22 +49,19 @@ public class EventController {
 	@RequestMapping(value = { "/", "/eventList" })
 	public String list(Model model, HttpServletRequest request) throws Exception {
 		String page = request.getParameter("p");
-		if(page==null) {
-			page="1";
+		if (page == null) {
+			page = "1";
 		}
-		model.addAttribute("page",page);
-		int numdb =Integer.parseInt(page);
+		model.addAttribute("page", page);//現在のページをjspに返す
+		int numdb = Integer.parseInt(page);
 
-		List<Event> needList =eventDao.page(numdb);
-
+		List<Event> needList = eventDao.page(numdb);
 		List<Event> eventList = eventDao.findAll();
-
 		double numEvents = eventList.size();
-		int numPages=(int)Math.ceil(numEvents/5);
-		model.addAttribute("numPages",numPages);//必要なページ数を返す
+		int numPages = (int) Math.ceil(numEvents / 5);
+		model.addAttribute("numPages", numPages);//必要なページ数を返す
 
-
-		model.addAttribute("needList", needList);//すべてのEventtableDBの中身をjspに返す
+		model.addAttribute("needList", needList);//必要なEventtableDBの中身をjspに返す
 		List<Join> joinList = joinDao.findAll();
 		model.addAttribute("joinList", joinList);//すべてのJointableDBの中身をjspに返す
 
@@ -81,6 +77,10 @@ public class EventController {
 		model.addAttribute("event", event);
 		event.setUser(user);
 		List<Group> group = groupDao.findAll();
+		Group g = new Group();
+		g.setGroupId(null);
+		g.setGroupName("全員");
+		group.add(0, g); //対象グループの「全員」選択リスト
 		model.addAttribute("group", group);
 		return "addEvent";
 	}
@@ -93,27 +93,108 @@ public class EventController {
 			Model model) throws Exception {
 		List<Group> group = groupDao.findAll();
 		model.addAttribute("group", group);
+		Date start = event.getStartdate();
+		Date end = event.getEnddate();
+		if (start != null && end != null) {
+			if (end.before(start)) {
+				errors.rejectValue("enddate", "error.enddate.id");
+				Group g = new Group();
+				g.setGroupId(null);
+				g.setGroupName("全員");
+				group.add(0, g); //対象グループの「全員」選択リスト
+				model.addAttribute("group", group);
+				return "addEvent";
+			}
+		}
 		if (!errors.hasErrors()) {
-			System.out.println("1");
+			if (event.getGroup().getGroupId() == null) {
+				event.setGroup(null);
+			}
 			eventDao.insert(event);
 			return "addEventDone";
 		} else {
-			System.out.println("2");
+			Group g = new Group();
+			g.setGroupId(null);
+			g.setGroupName("全員");
+			group.add(0, g); //対象グループの「全員」選択リスト
+			model.addAttribute("group", group);
 			return "addEvent";
 		}
 	}
 
+		//イベント編集(途中)
+		@RequestMapping(value = "/editEvent/{id}", method = RequestMethod.GET)
+		public String edit(@PathVariable("id") Integer eventId, Model model) throws Exception {
+			Event event = eventDao.findById(eventId);
+			model.addAttribute("event", event);
+			List<Group> group = groupDao.findAll();
+			Group g = new Group();
+			g.setGroupId(null);
+			g.setGroupName("全員");
+			group.add(0, g); //対象グループの「全員」選択リスト
+			model.addAttribute("group", group);
+			return "editEvent";
+		}
+
+		@RequestMapping(value = "/editEvent/{eventId}", method = RequestMethod.POST)
+		public String editPost(
+				@Valid Event event,
+				
+				Errors errors,
+				Model model) throws Exception {
+			List<Group> group = groupDao.findAll();
+			model.addAttribute("group", group);
+			Date start = event.getStartdate();
+			Date end = event.getEnddate();
+			if (start != null && end != null) {
+				if (end.before(start)) {
+					errors.rejectValue("enddate", "error.enddate.id");
+					Group g = new Group();
+					g.setGroupId(null);
+					g.setGroupName("全員");
+					group.add(0, g); //対象グループの「全員」選択リスト
+					model.addAttribute("group", group);
+					return "editEvent";
+				}
+			}
+			if (!errors.hasErrors()) {
+				if (event.getGroup().getGroupId() == null) {
+					event.setGroup(null);
+				}
+				eventDao.update(event);
+				return "editEventDone";
+			} else {
+				Group g = new Group();
+				g.setGroupId(null);
+				g.setGroupName("全員");
+				group.add(0, g); //対象グループの「全員」選択リスト
+				model.addAttribute("group", group);
+				return "editEvent";
+			}
+		}
 
 
 	// 本日のイベント
 	@RequestMapping(value = "/todayEvent")
-	public String todaylist(@RequestParam(value = "p", defaultValue = "0") String p, Model model) throws Exception {
-		List<Event> todayList = eventDao.findEventOfToday();
-		PagedListHolder<Event> pagedListHolder = new PagedListHolder<>(todayList);
-		pagedListHolder.setSource(todayList);
-		pagedListHolder.setPageSize(2);
-		pagedListHolder.setPage(Integer.parseInt(p));
-		model.addAttribute("pagedListHolder", pagedListHolder);
+	public String todaylist(
+			@RequestParam(name = "p", defaultValue = "1") String page,
+			Model model) throws Exception {
+		Date today = new Date();
+		Date dayOfEnd = (Date) eventDao.findMaxEndDateOfEvent();
+
+		model.addAttribute("page", page);//現在のページをjspに返す
+		int numdb = Integer.parseInt(page);
+
+		List<Event> eventList = eventDao.findEventOfToday(today, dayOfEnd);
+		double numEvents = eventList.size();
+		int numPages = (int) Math.ceil(numEvents / 5);
+		model.addAttribute("numPages", numPages);//必要なページ数を返す
+
+		List<Event> todayList = eventDao.findEventOfTodaypage(today, dayOfEnd, numdb);
+		model.addAttribute("todayList", todayList);//必要なEventotableの中身をjspに返す
+		List<Join> joinList = joinDao.findAll();
+		model.addAttribute("joinList", joinList);//すべてのJointableDBの中身をjspに返す
+
 		return "todayEvent";
 	}
 
@@ -124,5 +205,7 @@ public class EventController {
 		model.addAttribute("event", event);
 		return "detailsEvent";
 	}
+
+
 
 }

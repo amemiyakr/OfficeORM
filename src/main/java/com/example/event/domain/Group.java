@@ -3,6 +3,7 @@ package com.example.event.domain;
 public class Group {
 	private Integer groupId;
 	private String groupName;
+
 	public Integer getGroupId() {
 		return groupId;
 	}

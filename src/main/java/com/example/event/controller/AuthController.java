@@ -19,37 +19,36 @@ public class AuthController {
 	@Autowired
 	private UserDao userDao;
 
-	@RequestMapping(value="/login",method=RequestMethod.GET)
-	public String addGet(Model model)throws Exception{
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String addGet(Model model) throws Exception {
 		User user = new User();
-		model.addAttribute("user",user);
+		model.addAttribute("user", user);
 		return "login";
 	}
 
-	@RequestMapping(value="/login",method=RequestMethod.POST)
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String loginPost(
 			@Valid User user,
 			Errors errors,
-			HttpSession session)throws Exception{
+			HttpSession session) throws Exception {
 
-		if(!errors.hasErrors()) {
+		if (!errors.hasErrors()) {
 			user = userDao.findByLoginIdAndLoginPass(user.getLoginId(), user.getPass());
-			if(user != null){
+			if (user != null) {
 				session.setAttribute("userId", user.getUserId());
 				session.setAttribute("loginId", user.getLoginId());
 				session.setAttribute("userName", user.getUserName());
 				session.setAttribute("typeId", user.getType());
 				return "redirect:/eventList";
-			}else {
+			} else {
 				errors.reject("errors.login");
 				return "login";
 			}
-		}else {
+		} else {
 			return "login";
 		}
 
 	}
-
 
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {

@@ -7,7 +7,6 @@
 		<id name="groupId" column="group_id">
 			<generator class="native" />
 		</id>
-		<property name="groupName" column="group_name" type="string"/>
-
+		<property name="groupName" column="group_name" type="string" />
 	</class>
 </hibernate-mapping>

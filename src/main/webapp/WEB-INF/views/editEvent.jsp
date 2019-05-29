@@ -12,43 +12,45 @@
 <link href="<spring:url value="/css/bootstrap.min.css" />"
 	rel="stylesheet" />
 <link href="<spring:url value="/css/style.css" />" rel="stylesheet" />
-<title>イベント登録</title>
+<title>イベント編集</title>
 </head>
 <body>
 	<div class="container">
 		<c:import url="header/header.jsp" />
-		<h1>イベント登録</h1>
+		<h1>イベント編集</h1>
 		<form:form modelAttribute="event">
 			<div class="row">
 				<div class="col-md-12">
 					<div class="form-group">
+						<form:hidden path="eventId" />
+
+					</div>
+					<div class="form-group">
 						<p>
 							<strong>タイトル(必須)</strong>
 						</p>
-						<form:input path="title" cssClass="form-control" placeholder="" />
+						<form:input path="title" cssClass="form-control"  />
 						<form:errors path="title" cssClass="form-control alert-danger" />
 					</div>
 					<div class="form-group">
 						<p>
 							<strong>開始日時(必須)</strong>
 						</p>
-						<form:input path="startdate" cssClass="form-control"
-							placeholder="0000-00-00 00:00:00" />
+						<form:input path="startdate" cssClass="form-control"/>
 						<form:errors path="startdate" cssClass="form-control alert-danger" />
 					</div>
 					<div class="form-group">
 						<p>
 							<strong>終了日時(必須)</strong>
 						</p>
-						<form:input path="enddate" cssClass="form-control"
-							placeholder="0000-00-00 00:00:00" />
+						<form:input path="enddate" cssClass="form-control" />
 						<form:errors path="enddate" cssClass="form-control alert-danger" />
 					</div>
 					<div class="form-group">
 						<p>
 							<strong>場所(必須)</strong>
 						</p>
-						<form:input path="place" cssClass="form-control" placeholder="" />
+						<form:input path="place" cssClass="form-control" />
 						<form:errors path="place" cssClass="form-control alert-danger" />
 					</div>
 					<div class="form-group">
@@ -56,20 +58,19 @@
 							<strong>対象グループ</strong>
 						</p>
 						<form:select path="group.groupId" items="${group }"
-							itemLabel="groupName" itemValue="groupId" cssClass="form-control" >
-						</form:select>
+							itemLabel="groupName" itemValue="groupId" cssClass="form-control" />
 					</div>
 					<div class="form-group">
 						<p>
 							<strong>詳細</strong>
 						</p>
 						<form:textarea path="details" cssClass="form-control"
-							placeholder="" />
+							 />
 					</div>
 					<p>
 						<form:hidden path="user.userId" />
-						<a href="eventList" class="btn btn-default">キャンセル</a> <input
-							type="submit" value="登録" class="btn btn-primary">
+						<a href="#" class="btn btn-default">キャンセル</a> <input type="submit"
+							value="保存" class="btn btn-primary">
 					</p>
 				</div>
 			</div>

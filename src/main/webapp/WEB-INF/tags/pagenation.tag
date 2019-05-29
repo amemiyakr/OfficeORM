@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ attribute name="pagedListHolder" required="true" type="org.springframework.beans.support.PagedListHolder" %>
 <%@ attribute name="pagedLink"       required="true" type="java.lang.String" %>
-<c:if test="${pagedListHolder.pageCount > 1}">
+
   <ul class="pagination">
 <c:if test="${!pagedListHolder.firstPage}">
     <li><a href="<%= StringUtils.replace(pagedLink, "~", String.valueOf(pagedListHolder.getPage()-1)) %>"><<</a></li>
@@ -35,4 +35,3 @@
     <li><a href="<%= StringUtils.replace(pagedLink, "~", String.valueOf(pagedListHolder.getPage()+1)) %>">>></a></li>
 </c:if>
   </ul>
-</c:if>

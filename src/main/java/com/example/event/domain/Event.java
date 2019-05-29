@@ -12,12 +12,12 @@ public class Event {
 	private String title;
 	@NotNull
 	private Date startdate;
+	@NotNull
 	private Date enddate;
 	@NotBlank
 	private String place;
 	private Group group;
 	private String details;
-	@NotNull
 	private User user;
 	private Date createdate;
 
@@ -92,5 +92,6 @@ public class Event {
 	public void setCreatedate(Date createdate) {
 		this.createdate = createdate;
 	}
+
 
 }

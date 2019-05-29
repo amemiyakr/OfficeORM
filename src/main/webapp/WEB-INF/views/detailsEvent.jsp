@@ -50,10 +50,10 @@
 					<!-- TODO: 参加者の項目を追加する -->
 				</table>
 				<!-- TODO: 参加の有無やログインユーザーの種別などに応じて、必要なボタンのみ表示する -->
-				<a href="#" class="btn btn-primary">一覧に戻る</a>
+				<a href="<spring:url value="/eventList" />" class="btn btn-primary">一覧に戻る</a>
 				<a href="#" class="btn btn-info">参加する</a>
 				<a href="#" class="btn btn-warning">参加を取り消す</a>
-				<a href="#" class="btn btn-default">編集</a>
+				<a href="<spring:url value="/editEvent/${event.eventId}" />" class="btn btn-default">編集</a>
 				<a href="#" class="btn btn-danger">削除</a>
 			</div>
 		</div>
