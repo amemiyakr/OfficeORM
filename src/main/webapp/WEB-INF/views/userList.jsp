@@ -74,7 +74,7 @@
 					</c:forEach>
 				</table>
 				<p>
-					<a href="#" class="btn btn-primary">ユーザーの登録</a>
+					<a href="addUser" class="btn btn-primary">ユーザーの登録</a>
 				</p>
 			</div>
 		</div>

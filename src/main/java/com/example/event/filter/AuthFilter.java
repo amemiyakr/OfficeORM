@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.example.event.domain.Type;
+
 /**
  * Servlet Filter implementation class AuthFilter
  */
@@ -57,6 +59,49 @@ public class AuthFilter implements Filter {
 				return;
 			}
 		}
+		else if (uri.endsWith("/userList")) {
+			if ((Integer)session.getAttribute("typeId") != Type.ADMIN) {
+				res.sendRedirect(req.getContextPath() + "/eventList");
+				return;
+			}
+		}
+		else if (uri.endsWith("/addUser")) {
+			if ((Integer)session.getAttribute("typeId") != Type.ADMIN) {
+				res.sendRedirect(req.getContextPath() + "/eventList");
+				return;
+			}
+		}
+		else if (uri.endsWith("/addUserDone")) {
+			if ((Integer)session.getAttribute("typeId") != Type.ADMIN) {
+				res.sendRedirect(req.getContextPath() + "/eventList");
+				return;
+			}
+		}
+		else if (uri.endsWith("/editUser")) {
+			if ((Integer)session.getAttribute("typeId") != Type.ADMIN) {
+				res.sendRedirect(req.getContextPath() + "/eventList");
+				return;
+			}
+		}
+		else if (uri.endsWith("/editUserDone")) {
+			if ((Integer)session.getAttribute("typeId") != Type.ADMIN) {
+				res.sendRedirect(req.getContextPath() + "/eventList");
+				return;
+			}
+		}
+		else if (uri.endsWith("/detailsUser")) {
+			if ((Integer)session.getAttribute("typeId") != Type.ADMIN) {
+				res.sendRedirect(req.getContextPath() + "/eventList");
+				return;
+			}
+		}
+		else if (uri.endsWith("/deleteUser")) {
+			if ((Integer)session.getAttribute("typeId") != Type.ADMIN) {
+				res.sendRedirect(req.getContextPath() + "/eventList");
+				return;
+			}
+		}
+
 
 		// pass the request along the filter chain
 		chain.doFilter(request, response);

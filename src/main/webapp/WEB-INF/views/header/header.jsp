@@ -20,9 +20,11 @@
 
 		<div class="collapse navbar-collapse" id="mynavbar">
 			<ul class="nav navbar-nav">
-				<li><a href="todayEvent">本日のイベント</a></li>
-				<li><a href="#">イベント管理</a></li>
-				<li><a href="userList">ユーザー管理</a></li>
+				<li><a href="<spring:url value="/todayEvent" />">本日のイベント</a></li>
+				<li><a href="<spring:url value="/eventList" />">イベント管理</a></li>
+
+					<li><a href="<spring:url value="/userList" />">ユーザー管理</a></li>
+
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">

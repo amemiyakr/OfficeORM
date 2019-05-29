@@ -10,11 +10,11 @@ public interface UserDao {
 
 	User findById(Integer id) throws Exception;
 
-	void insert(User member) throws Exception;
+	void insert(User user) throws Exception;
 
-	void update(User member) throws Exception;
+	void update(User user) throws Exception;
 
-	void delete(User member) throws Exception;
+	void delete(User user) throws Exception;
 
 	User findByLoginIdAndLoginPass(String loginId, String loginPass ) throws Exception;
 

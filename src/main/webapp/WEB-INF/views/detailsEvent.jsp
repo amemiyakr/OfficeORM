@@ -47,14 +47,40 @@
 						<th>登録者</th>
 						<td><c:out value="${event.user.userName}" /></td>
 					</tr>
-					<!-- TODO: 参加者の項目を追加する -->
+					<tr>
+						<th>参加者</th>
+						<td>
+							<c:forEach items="${joinList}" var="join" varStatus="joinStatus">
+								<c:out value="${join.user.userName}" /><c:if test="${joinStatus.last == false}">, </c:if>
+							</c:forEach>
+						</td>
+					</tr>
 				</table>
-				<!-- TODO: 参加の有無やログインユーザーの種別などに応じて、必要なボタンのみ表示する -->
 				<a href="<spring:url value="/eventList" />" class="btn btn-primary">一覧に戻る</a>
-				<a href="#" class="btn btn-info">参加する</a>
-				<a href="#" class="btn btn-warning">参加を取り消す</a>
-				<a href="<spring:url value="/editEvent/${event.eventId}" />" class="btn btn-default">編集</a>
-				<a href="#" class="btn btn-danger">削除</a>
+				<c:choose>
+					<%-- このイベントに参加していない場合、「参加する」ボタンを表示 --%>
+					<c:when test="${yourJoin == null}">
+						<a href="<spring:url value="/joinEvent/${event.eventId}" />" class="btn btn-info">参加する</a>
+					</c:when>
+					<%-- このイベントに参加している場合、「参加を取り消す」ボタンを表示 --%>
+					<c:otherwise>
+						<a href="<spring:url value="/cancelEvent/${event.eventId}" />" class="btn btn-warning">参加を取り消す</a>
+					</c:otherwise>
+				</c:choose>
+				<c:choose>
+					<%-- 自分が登録したイベントの場合、編集・削除ボタンを表示 --%>
+					<c:when test="${loginUser.userId == event.user.userId}">
+						<a href="<spring:url value="/editEvent/${event.eventId}" />" class="btn btn-default">編集</a>
+						<a href="<spring:url value="/delEvent/${event.eventId}" />" class="btn btn-danger">削除</a>
+					</c:when>
+					<%-- 管理ユーザーは、どのイベントにも編集・削除ボタンを表示 --%>
+					<c:when test="${loginUser.type.typeId == adminTypeId}">
+						<a href="<spring:url value="/editEvent/${event.eventId}" />" class="btn btn-default">編集</a>
+						<a href="<spring:url value="/delEvent/${event.eventId}" />" class="btn btn-danger">削除</a>
+					</c:when>
+					<%-- 一般ユーザーは、編集・削除ボタンを表示しない --%>
+				</c:choose>
+
 			</div>
 		</div>
 	</div>

@@ -12,67 +12,58 @@
 <link href="<spring:url value="/css/bootstrap.min.css" />"
 	rel="stylesheet" />
 <link href="<spring:url value="/css/style.css" />" rel="stylesheet" />
-<title>イベント編集</title>
+<title>ユーザー登録</title>
 </head>
 <body>
 	<div class="container">
 		<c:import url="header/header.jsp" />
-		<h1>イベント編集</h1>
-		<form:form modelAttribute="event">
+		<h1>ユーザー登録</h1>
+		<form:form modelAttribute="user">
 			<div class="row">
 				<div class="col-md-12">
 					<div class="form-group">
-						<form:hidden path="eventId" />
-
+						<p>
+							<strong>氏名(必須)</strong>
+						</p>
+						<form:input path="userName" cssClass="form-control" placeholder="氏名" />
+						<form:errors path="userName" cssClass="form-control alert-danger" />
 					</div>
 					<div class="form-group">
 						<p>
-							<strong>タイトル(必須)</strong>
+							<strong>ログインID(必須)</strong>
 						</p>
-						<form:input path="title" cssClass="form-control"  />
-						<form:errors path="title" cssClass="form-control alert-danger" />
+						<form:input path="loginId" cssClass="form-control"
+							placeholder="ログインID" />
+						<form:errors path="loginId" cssClass="form-control alert-danger" />
 					</div>
 					<div class="form-group">
 						<p>
-							<strong>開始日時(必須)</strong>
+							<strong>パスワード(必須)</strong>
 						</p>
-						<form:input path="startdate" cssClass="form-control"/>
-						<form:errors path="startdate" cssClass="form-control alert-danger" />
+						<form:input path="pass" cssClass="form-control" type="password"
+							placeholder="パスワード" />
+						<form:errors path="pass" cssClass="form-control alert-danger" />
 					</div>
 					<div class="form-group">
 						<p>
-							<strong>終了日時(必須)</strong>
+							<strong>ユーザー種別</strong>
 						</p>
-						<form:input path="enddate" cssClass="form-control" />
-						<form:errors path="enddate" cssClass="form-control alert-danger" />
-					</div>
-					<div class="form-group">
-						<p>
-							<strong>場所(必須)</strong>
-						</p>
-						<form:input path="place" cssClass="form-control" />
-						<form:errors path="place" cssClass="form-control alert-danger" />
+						<form:select path="type.typeId" items="${type }"
+							itemLabel="typeName" itemValue="typeId" cssClass="form-control" >
+						</form:select>
 					</div>
 					<div class="form-group">
 						<p>
 							<strong>対象グループ</strong>
 						</p>
 						<form:select path="group.groupId" items="${group }"
-							itemLabel="groupName" itemValue="groupId" cssClass="form-control" />
+							itemLabel="groupName" itemValue="groupId" cssClass="form-control" >
+						</form:select>
 					</div>
-					<div class="form-group">
-						<p>
-							<strong>詳細</strong>
-						</p>
-						<form:textarea path="details" cssClass="form-control"
-							 />
-					</div>
+
 					<p>
-						<form:hidden path="user.userId" />
-
-						<a href="<spring:url value="/detailsEvent/${event.eventId}" />" class="btn btn-default">キャンセル</a>
+						<a href="userList" class="btn btn-default">キャンセル</a>
 						 <input type="submit" value="登録" class="btn btn-primary">
-
 					</p>
 				</div>
 			</div>

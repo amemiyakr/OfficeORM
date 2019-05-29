@@ -23,9 +23,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.event.dao.EventDao;
 import com.example.event.dao.GroupDao;
 import com.example.event.dao.JoinDao;
+import com.example.event.dao.UserDao;
 import com.example.event.domain.Event;
 import com.example.event.domain.Group;
 import com.example.event.domain.Join;
+import com.example.event.domain.Type;
 import com.example.event.domain.User;
 
 @Controller
@@ -37,6 +39,8 @@ public class EventController {
 	private JoinDao joinDao;
 	@Autowired
 	private GroupDao groupDao;
+	@Autowired
+	private UserDao userDao;
 
 	@InitBinder
 	public void InitBinder(WebDataBinder binder) {
@@ -122,48 +126,32 @@ public class EventController {
 		}
 	}
 
-		//イベント編集(途中)
-		@RequestMapping(value = "/editEvent/{id}", method = RequestMethod.GET)
-		public String edit(@PathVariable("id") Integer eventId, Model model) throws Exception {
-			Event event = eventDao.findById(eventId);
-			model.addAttribute("event", event);
-			List<Group> group = groupDao.findAll();
-			Group g = new Group();
-			g.setGroupId(null);
-			g.setGroupName("全員");
-			group.add(0, g); //対象グループの「全員」選択リスト
-			model.addAttribute("group", group);
-			return "editEvent";
-		}
+	//イベント編集
+	@RequestMapping(value = "/editEvent/{id}", method = RequestMethod.GET)
+	public String edit(@PathVariable("id") Integer eventId, Model model) throws Exception {
+		Event event = eventDao.findById(eventId);
+		model.addAttribute("event", event);
+		List<Group> group = groupDao.findAll();
+		Group g = new Group();
+		g.setGroupId(null);
+		g.setGroupName("全員");
+		group.add(0, g); //対象グループの「全員」選択リスト
+		model.addAttribute("group", group);
+		return "editEvent";
+	}
 
-		@RequestMapping(value = "/editEvent/{eventId}", method = RequestMethod.POST)
-		public String editPost(
-				@Valid Event event,
-				
-				Errors errors,
-				Model model) throws Exception {
-			List<Group> group = groupDao.findAll();
-			model.addAttribute("group", group);
-			Date start = event.getStartdate();
-			Date end = event.getEnddate();
-			if (start != null && end != null) {
-				if (end.before(start)) {
-					errors.rejectValue("enddate", "error.enddate.id");
-					Group g = new Group();
-					g.setGroupId(null);
-					g.setGroupName("全員");
-					group.add(0, g); //対象グループの「全員」選択リスト
-					model.addAttribute("group", group);
-					return "editEvent";
-				}
-			}
-			if (!errors.hasErrors()) {
-				if (event.getGroup().getGroupId() == null) {
-					event.setGroup(null);
-				}
-				eventDao.update(event);
-				return "editEventDone";
-			} else {
+	@RequestMapping(value = "/editEvent/{eventId}", method = RequestMethod.POST)
+	public String editPost(
+			@Valid Event event,
+			Errors errors,
+			Model model) throws Exception {
+		List<Group> group = groupDao.findAll();
+		model.addAttribute("group", group);
+		Date start = event.getStartdate();
+		Date end = event.getEnddate();
+		if (start != null && end != null) {
+			if (end.before(start)) {
+				errors.rejectValue("enddate", "error.enddate.id");
 				Group g = new Group();
 				g.setGroupId(null);
 				g.setGroupName("全員");
@@ -172,7 +160,22 @@ public class EventController {
 				return "editEvent";
 			}
 		}
+		if (!errors.hasErrors()) {
+			if (event.getGroup().getGroupId() == null) {
+				event.setGroup(null);
+			}
+			eventDao.update(event);
+			return "editEventDone";
+		} else {
 
+			Group g = new Group();
+			g.setGroupId(null);
+			g.setGroupName("全員");
+			group.add(0, g); //対象グループの「全員」選択リスト
+			model.addAttribute("group", group);
+			return "editEvent";
+		}
+	}
 
 	// 本日のイベント
 	@RequestMapping(value = "/todayEvent")
@@ -200,12 +203,35 @@ public class EventController {
 
 	// イベント詳細
 	@RequestMapping(value = "/detailsEvent/{id}", method = RequestMethod.GET)
-	public String detail(@PathVariable("id") Integer eventId, Model model) throws Exception {
+	public String detail(@PathVariable("id") Integer eventId, Model model, HttpSession session) throws Exception {
 		Event event = eventDao.findById(eventId);
 		model.addAttribute("event", event);
+		// そのイベントの参加者リストを取得
+		List<Join> joinList = joinDao.findByEvent(event);
+		model.addAttribute("joinList", joinList);
+		// ログインユーザーをセッションから取得
+		User loginUser = userDao.findById((Integer) session.getAttribute("userId"));
+		model.addAttribute("loginUser", loginUser);
+		// イベント参加データを取得（参加していない場合null）
+		Join yourJoin = joinDao.findByUserAndEvent(loginUser, event);
+		model.addAttribute("yourJoin", yourJoin);
+		// 管理ユーザーのタイプIDを取得
+		model.addAttribute("adminTypeId", Type.ADMIN);
 		return "detailsEvent";
 	}
 
-
+	//イベント詳細削除
+	@RequestMapping(value = "/delEvent/{id}")
+	public String del(@PathVariable("id") Integer id, Model model) throws Exception {
+		Event event = eventDao.findById(id);
+		// 予め、削除するイベントの参加者情報を全て削除しておく
+		List<Join> joinList = joinDao.findByEvent(event);
+		for (Join join : joinList) {
+			joinDao.delete(join);
+		}
+		// イベントを削除
+		eventDao.delete(event);
+		return "delEvent";
+	}
 
 }

@@ -1,6 +1,7 @@
 package com.example.event.domain;
 
 public class Type {
+	public static final int ADMIN = 2; //管理ユーザーのID
 	private Integer typeId;
 	private String typeName;
 	public Integer getTypeId() {

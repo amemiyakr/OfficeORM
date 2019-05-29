@@ -35,7 +35,7 @@ public class EventDaoImpl extends BaseDao implements EventDao {
 		// page = 2 -> 5
 		// page = 3 -> 10
 		// page = n -> (n - 1) * 5
-		page=(page-1)*5;
+		page = (page - 1) * 5;
 		return getSession().createCriteria(Event.class)
 				.setFirstResult(page)
 				.setMaxResults(5)
@@ -43,8 +43,6 @@ public class EventDaoImpl extends BaseDao implements EventDao {
 				.addOrder(Order.desc("startdate"))
 				.list();
 	}
-
-
 
 	@Override
 	public Event findById(Integer id) throws Exception {
@@ -81,9 +79,9 @@ public class EventDaoImpl extends BaseDao implements EventDao {
 		Date today = todayOfStart;
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(todayOfStart);
-		calendar.add(calendar.DATE, 1);
+		calendar.add(Calendar.DATE, 1);
 		todayOfStart = calendar.getTime();
-		page=(page-1)*5;
+		page = (page - 1) * 5;
 		return getSession().createCriteria(Event.class)
 				.setFirstResult(page)
 				.setMaxResults(5)
@@ -100,7 +98,7 @@ public class EventDaoImpl extends BaseDao implements EventDao {
 		Date today = todayOfStart;
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(todayOfStart);
-		calendar.add(calendar.DATE, 1);
+		calendar.add(Calendar.DATE, 1);
 		todayOfStart = calendar.getTime();
 		return getSession().createCriteria(Event.class)
 				.setFetchMode("group", FetchMode.JOIN)
@@ -110,8 +108,6 @@ public class EventDaoImpl extends BaseDao implements EventDao {
 				.list();
 	}
 
-
-	@SuppressWarnings("unchecked") //ワーニングを出ないようにするアノテーション
 	@Override
 	public Date findMaxEndDateOfEvent() throws Exception {
 		Date maxEndDay = (Date) getSession().createCriteria(Event.class)
@@ -119,11 +115,9 @@ public class EventDaoImpl extends BaseDao implements EventDao {
 				.uniqueResult();
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(maxEndDay);
-		calendar.add(calendar.DATE, 1);
+		calendar.add(Calendar.DATE, 1);
 		maxEndDay = calendar.getTime();
 		return maxEndDay;
 	}
-
-
 
 }
