@@ -128,8 +128,16 @@ public class EventController {
 
 	//イベント編集
 	@RequestMapping(value = "/editEvent/{id}", method = RequestMethod.GET)
-	public String edit(@PathVariable("id") Integer eventId, Model model) throws Exception {
+	public String editGet(@PathVariable("id") Integer eventId, Model model, HttpSession session) throws Exception {
+		// 編集するイベントを読み込む
 		Event event = eventDao.findById(eventId);
+		// ログインユーザーをセッションから取得
+		User loginUser = userDao.findById((Integer) session.getAttribute("userId"));
+		// イベント登録者でも管理ユーザーでもない場合、イベント詳細ページにリダイレクトする
+		if (loginUser.getUserId() != event.getUser().getUserId() && loginUser.getType().getTypeId() != Type.ADMIN) {
+			return "redirect:/detailsEvent/{id}";
+		}
+
 		model.addAttribute("event", event);
 		List<Group> group = groupDao.findAll();
 		Group g = new Group();
@@ -144,7 +152,15 @@ public class EventController {
 	public String editPost(
 			@Valid Event event,
 			Errors errors,
-			Model model) throws Exception {
+			Model model,
+			HttpSession session) throws Exception {
+		// ログインユーザーをセッションから取得
+		User loginUser = userDao.findById((Integer) session.getAttribute("userId"));
+		// イベント登録者でも管理ユーザーでもない場合、イベント詳細ページにリダイレクトする
+		if (loginUser.getUserId() != event.getUser().getUserId() && loginUser.getType().getTypeId() != Type.ADMIN) {
+			return "redirect:/detailsEvent/{id}";
+		}
+
 		List<Group> group = groupDao.findAll();
 		model.addAttribute("group", group);
 		Date start = event.getStartdate();
@@ -222,8 +238,16 @@ public class EventController {
 
 	//イベント詳細削除
 	@RequestMapping(value = "/delEvent/{id}")
-	public String del(@PathVariable("id") Integer id, Model model) throws Exception {
+	public String del(@PathVariable("id") Integer id, Model model, HttpSession session) throws Exception {
+		// 削除するイベントを読み込む
 		Event event = eventDao.findById(id);
+		// ログインユーザーをセッションから取得
+		User loginUser = userDao.findById((Integer) session.getAttribute("userId"));
+		// イベント登録者でも管理ユーザーでもない場合、イベント詳細ページにリダイレクトする
+		if (loginUser.getUserId() != event.getUser().getUserId() && loginUser.getType().getTypeId() != Type.ADMIN) {
+			return "redirect:/detailsEvent/{id}";
+		}
+
 		// 予め、削除するイベントの参加者情報を全て削除しておく
 		List<Join> joinList = joinDao.findByEvent(event);
 		for (Join join : joinList) {

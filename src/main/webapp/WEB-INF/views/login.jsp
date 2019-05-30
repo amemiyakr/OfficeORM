@@ -17,10 +17,13 @@
 </head>
 <body>
 	<div class="container">
-		<c:import url="header/header.jsp" />
 		<form:errors path="user" />
 		<form:form modelAttribute="user">
+		<form:hidden  path="userName" value="tempName" />
 			<div class="row">
+			<a class="navbar-brand" href="#">
+				<p class="text-primary"><strong>Event Manager</strong></p>
+			</a>
 				<div class="col-md-12">
 					<div class="form-group">
 						<form:input path="loginId" cssClass="form-control" placeholder="ログインID" />
@@ -30,7 +33,6 @@
 						<form:input path="pass" type="password" cssClass="form-control" placeholder="パスワード" />
 						<form:errors path="pass" />
 					</div>
-
 					<p><input type="submit" value="ログイン" class="btn btn-primary btn-block"></p>
 				</div>
 			</div>

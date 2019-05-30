@@ -45,6 +45,11 @@ public class AuthFilter implements Filter {
 		HttpSession session = req.getSession();
 
 		String uri = req.getRequestURI();
+
+		System.out.println(uri);
+		System.out.println((Integer)session.getAttribute("typeId"));
+
+
 		if (!uri.endsWith("/login") &&
 				!uri.contains("/css/") &&
 				!uri.contains("/js/") &&
@@ -59,48 +64,20 @@ public class AuthFilter implements Filter {
 				return;
 			}
 		}
-		else if (uri.endsWith("/userList")) {
+		if (uri.endsWith("/userList") ||
+			uri.endsWith("/addUser") ||
+			uri.endsWith("/addUserDone") ||
+			uri.endsWith("/editUser") ||
+			uri.endsWith("/editUserDone") ||
+			uri.endsWith("/detailsUser") ||
+			uri.endsWith("/delUser") ||
+			uri.endsWith("/deleteUserDone")) {
 			if ((Integer)session.getAttribute("typeId") != Type.ADMIN) {
 				res.sendRedirect(req.getContextPath() + "/eventList");
 				return;
 			}
 		}
-		else if (uri.endsWith("/addUser")) {
-			if ((Integer)session.getAttribute("typeId") != Type.ADMIN) {
-				res.sendRedirect(req.getContextPath() + "/eventList");
-				return;
-			}
-		}
-		else if (uri.endsWith("/addUserDone")) {
-			if ((Integer)session.getAttribute("typeId") != Type.ADMIN) {
-				res.sendRedirect(req.getContextPath() + "/eventList");
-				return;
-			}
-		}
-		else if (uri.endsWith("/editUser")) {
-			if ((Integer)session.getAttribute("typeId") != Type.ADMIN) {
-				res.sendRedirect(req.getContextPath() + "/eventList");
-				return;
-			}
-		}
-		else if (uri.endsWith("/editUserDone")) {
-			if ((Integer)session.getAttribute("typeId") != Type.ADMIN) {
-				res.sendRedirect(req.getContextPath() + "/eventList");
-				return;
-			}
-		}
-		else if (uri.endsWith("/detailsUser")) {
-			if ((Integer)session.getAttribute("typeId") != Type.ADMIN) {
-				res.sendRedirect(req.getContextPath() + "/eventList");
-				return;
-			}
-		}
-		else if (uri.endsWith("/deleteUser")) {
-			if ((Integer)session.getAttribute("typeId") != Type.ADMIN) {
-				res.sendRedirect(req.getContextPath() + "/eventList");
-				return;
-			}
-		}
+
 
 
 		// pass the request along the filter chain

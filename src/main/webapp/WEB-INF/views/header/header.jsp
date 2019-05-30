@@ -1,4 +1,5 @@
 <%@ page pageEncoding="UTF-8"%>
+<%@ page import="com.example.event.domain.Type"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -22,9 +23,9 @@
 			<ul class="nav navbar-nav">
 				<li><a href="<spring:url value="/todayEvent" />">本日のイベント</a></li>
 				<li><a href="<spring:url value="/eventList" />">イベント管理</a></li>
-
+				<c:if test= "${ typeId == Type.ADMIN}">
 					<li><a href="<spring:url value="/userList" />">ユーザー管理</a></li>
-
+				</c:if>
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">

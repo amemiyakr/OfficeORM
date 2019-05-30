@@ -41,12 +41,14 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 	@Override
 	public User findById(Integer id) throws Exception {
 		return (User) getSession().createCriteria(User.class)
+				.setFetchMode("group", FetchMode.JOIN)
 				.add(Restrictions.eq("userId", id))
 				.uniqueResult();
 	}
 
 	@Override
 	public void insert(User user) throws Exception {
+
 		user.setCreatedate(new Date());
 		getSession().save(user);
 
@@ -54,13 +56,13 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 
 	@Override
 	public void update(User user) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
-
+		user.setCreatedate(new Date());
+		getSession().update(user);
 	}
 
 	@Override
 	public void delete(User user) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
+		getSession().delete(user);
 
 	}
 

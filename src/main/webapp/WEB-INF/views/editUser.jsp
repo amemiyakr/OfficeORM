@@ -12,12 +12,12 @@
 <link href="<spring:url value="/css/bootstrap.min.css" />"
 	rel="stylesheet" />
 <link href="<spring:url value="/css/style.css" />" rel="stylesheet" />
-<title>ユーザ登録</title>
+<title>ユーザー登録</title>
 </head>
 <body>
 	<div class="container">
 		<c:import url="header/header.jsp" />
-		<h1>ユーザ登録</h1>
+		<h1>ユーザ編集</h1>
 		<form:form modelAttribute="user">
 			<div class="row">
 				<div class="col-md-12">
@@ -25,7 +25,8 @@
 						<p>
 							<strong>氏名(必須)</strong>
 						</p>
-						<form:input path="userName" cssClass="form-control" placeholder="氏名" />
+						<form:input path="userName" cssClass="form-control"
+							placeholder="氏名" />
 						<form:errors path="userName" cssClass="form-control alert-danger" />
 					</div>
 					<div class="form-group">
@@ -38,32 +39,45 @@
 					</div>
 					<div class="form-group">
 						<p>
-							<strong>パスワード(必須)</strong>
+							<strong>パスワード(変更の場合のみ)</strong>
 						</p>
-						<form:input path="pass" cssClass="form-control" type="password"
+						<form:password name="passNew" path="" cssClass="form-control"
 							placeholder="パスワード" />
+						<form:hidden path="pass" />
 						<form:errors path="pass" cssClass="form-control alert-danger" />
 					</div>
 					<div class="form-group">
 						<p>
-							<strong>ユーザ種別</strong>
+							<strong>ユーザー種別</strong>
 						</p>
-						<form:select path="type.typeId" items="${type }"
-							itemLabel="typeName" itemValue="typeId" cssClass="form-control" >
-						</form:select>
+						<c:choose>
+							<c:when test="${user.userId == userId }">
+								<form:select path="type.typeId" items="${type }"
+									itemLabel="typeName" itemValue="typeId" cssClass="form-control"
+									disabled="true">
+								</form:select>
+								<form:hidden path="type.typeId" />
+							</c:when>
+							<c:otherwise>
+								<form:select path="type.typeId" items="${type }"
+									itemLabel="typeName" itemValue="typeId" cssClass="form-control">
+								</form:select>
+							</c:otherwise>
+						</c:choose>
 					</div>
 					<div class="form-group">
 						<p>
 							<strong>対象グループ</strong>
 						</p>
 						<form:select path="group.groupId" items="${group }"
-							itemLabel="groupName" itemValue="groupId" cssClass="form-control" >
+							itemLabel="groupName" itemValue="groupId" cssClass="form-control">
 						</form:select>
 					</div>
-
+					<form:hidden path="userId" />
 					<p>
-						<a href="userList" class="btn btn-default">キャンセル</a>
-						 <input type="submit" value="登録" class="btn btn-primary">
+						<a href="../detailsUser/<c:out value="${user.userId}" />"
+							class="btn btn-default">キャンセル</a> <input type="submit" value="保存"
+							class="btn btn-primary">
 					</p>
 				</div>
 			</div>

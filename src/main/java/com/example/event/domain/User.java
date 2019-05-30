@@ -10,6 +10,7 @@ public class User {
 	private String loginId;
 	@NotBlank
 	private String pass;
+	@NotBlank
 	private String userName;
 	private Type type;
 	private Group group;

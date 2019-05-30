@@ -14,9 +14,11 @@
 </head>
 <body>
 	<div class="container">
-		<c:import url="header/header.jsp" />
 		<h1>ログアウト</h1>
 		<div class="row">
+		<a class="navbar-brand" href="#">
+			<p class="text-primary"><strong>Event Manager</strong></p>
+		</a>
 			<div class="col-md-12">
 				<p>ログアウトしました。</p>
 				<p>

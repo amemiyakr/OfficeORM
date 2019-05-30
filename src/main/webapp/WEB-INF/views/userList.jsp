@@ -14,12 +14,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link href="<spring:url value="/css/bootstrap.min.css" />" rel="stylesheet" />
 <link href="<spring:url value="/css/style.css" />" rel="stylesheet" />
-<title>ユーザー一覧</title>
+<title>ユーザ一覧</title>
 </head>
 <body>
 	<div class="container">
 		<c:import url="header/header.jsp" />
-		<h1>ユーザー一覧</h1>
+		<h1>ユーザ一覧</h1>
 		<div class="row">
 			<div class="col-md-12">
 				<ul class="pagination nav navbar-nav navbar-right">
@@ -69,12 +69,12 @@
 							<td><c:out value="${user.userId}" /></td>
 							<td><c:out value="${user.userName}" /></td>
 							<td><c:out value="${user.group.groupName}" /></td>
-							<td><a href="#/<c:out value="${user.userId}" />" class="btn btn-default" >詳細</a></td>
+							<td><a href="detailsUser/<c:out value="${user.userId}" />" class="btn btn-default" >詳細</a></td>
 						</tr>
 					</c:forEach>
 				</table>
 				<p>
-					<a href="addUser" class="btn btn-primary">ユーザーの登録</a>
+					<a href="addUser" class="btn btn-primary">ユーザの登録</a>
 				</p>
 			</div>
 		</div>

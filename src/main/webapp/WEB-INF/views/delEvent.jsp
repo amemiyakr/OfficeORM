@@ -18,9 +18,9 @@
 		<h1>イベント削除</h1>
 		<div class="row">
 			<div class="col-md-12">
-				<p>イベントを削除しました。</p>
+				<p>イベントの削除が完了しました。</p>
 				<p>
-					<a href="<spring:url value="/detailsEvent/${event.eventId}" />">イベント詳細画面に戻る</a>
+					<a href="<spring:url value="/eventList"/>">イベント一覧に戻る</a>
 				</p>
 			</div>
 		</div>

@@ -10,16 +10,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link href="<spring:url value="/css/bootstrap.min.css" />" rel="stylesheet" />
 <link href="<spring:url value="/css/style.css" />" rel="stylesheet" />
-<title>イベント編集</title>
+<title>ユーザ一覧</title>
 </head>
 <body>
 	<div class="container">
-		<h1>イベント編集</h1>
+		<c:import url="header/header.jsp" />
+		<h1>ユーザ編集</h1>
 		<div class="row">
 			<div class="col-md-12">
-				<p>イベントの詳細を編集しました。</p>
+				<p>ユーザの編集が完了しました。</p>
 				<p>
-					<a href="<spring:url value="/detailsEvent/${event.eventId}" />">イベント詳細に戻る</a>
+					<a href="../detailsUser/<c:out value="${user.userId}" />">ユーザ詳細に戻る</a>
 				</p>
 			</div>
 		</div>

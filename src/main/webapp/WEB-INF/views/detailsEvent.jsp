@@ -71,12 +71,12 @@
 					<%-- 自分が登録したイベントの場合、編集・削除ボタンを表示 --%>
 					<c:when test="${loginUser.userId == event.user.userId}">
 						<a href="<spring:url value="/editEvent/${event.eventId}" />" class="btn btn-default">編集</a>
-						<a href="<spring:url value="/delEvent/${event.eventId}" />" class="btn btn-danger">削除</a>
+						<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#del">削除</button>
 					</c:when>
 					<%-- 管理ユーザーは、どのイベントにも編集・削除ボタンを表示 --%>
 					<c:when test="${loginUser.type.typeId == adminTypeId}">
 						<a href="<spring:url value="/editEvent/${event.eventId}" />" class="btn btn-default">編集</a>
-						<a href="<spring:url value="/delEvent/${event.eventId}" />" class="btn btn-danger">削除</a>
+						<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#del">削除</button>
 					</c:when>
 					<%-- 一般ユーザーは、編集・削除ボタンを表示しない --%>
 				</c:choose>
@@ -84,6 +84,21 @@
 			</div>
 		</div>
 	</div>
+	<!-- del -->
+<div class="modal fade" id="del" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        本当に削除してよろしいですか？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <a href="<spring:url value="/delEvent/${event.eventId}" />" class="btn btn-primary">OK</a>
+      </div>
+    </div>
+  </div>
+</div>
 	<script src="<spring:url value="/js/jquery-2.2.4.min.js" />"></script>
 	<script src="<spring:url value="/js/bootstrap.min.js" />"></script>
 </body>
