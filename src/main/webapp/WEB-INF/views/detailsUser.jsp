@@ -20,20 +20,20 @@
 			<div class="col-md-12">
 				<table class="table">
 					<tr>
-						<th>ID</th>
-						<td><c:out value="${user.userId}" /></td>
+						<th class="col-md-2">ID</th>
+						<td class="col-md-10"><c:out value="${user.userId}" /></td>
 					</tr>
 					<tr>
-						<th>氏名</th>
-						<td><c:out value="${user.userName}" /></td>
+						<th class="col-md-2">氏名</th>
+						<td class="col-md-10"><c:out value="${user.userName}" /></td>
 					</tr>
 					<tr>
-						<th>ログインID</th>
-						<td><c:out value="${user.loginId}" /></td>
+						<th class="col-md-2">ログインID</th>
+						<td class="col-md-10"><c:out value="${user.loginId}" /></td>
 					</tr>
 					<tr>
-						<th>対象グループ</th>
-						<td><c:out value="${user.group.groupName}" /></td>
+						<th class="col-md-2">対象グループ</th>
+						<td class="col-md-10"><c:out value="${user.group.groupName}" /></td>
 					</tr>
 				</table>
 				<a href="<spring:url value="/userList" />" class="btn btn-primary">一覧に戻る</a>

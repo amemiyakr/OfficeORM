@@ -22,4 +22,6 @@ public interface JoinDao {
 
 	Join findByUserAndEvent(User user, Event event) throws Exception;
 
+	List<Join> findByUser(User user) throws Exception;
+
 }

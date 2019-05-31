@@ -12,34 +12,61 @@
 					class="icon-bar"></span>
 			</button>
 
-				<a class="navbar-brand" href="#">
-					<p class="text-primary"><strong>Event Manager</strong></p>
-				</a>
+			<a class="navbar-brand" href="#">
+				<p class="text-primary">
+					<strong>Event Manager</strong>
+				</p>
+			</a>
 
 		</div>
 
+		<c:if test="${not empty userId}">
+			<div class="collapse navbar-collapse" id="mynavbar">
+				<ul class="nav navbar-nav">
+					<c:choose>
+						<c:when test="${judgeMenuOfTodayEvent==1 }">
+							<li class="active">
+						</c:when>
+						<c:otherwise>
+							<li>
+						</c:otherwise>
+					</c:choose>
+					<a href="<spring:url value="/todayEvent" />">本日のイベント</a>
+					</li>
+					<c:choose>
+						<c:when test="${judgeMenuOfEvent==1 }">
+							<li class="active">
+						</c:when>
+						<c:otherwise>
+							<li>
+						</c:otherwise>
+					</c:choose>
+					<a href="<spring:url value="/eventList" />">イベント管理</a>
+					</li>
+					<c:if test="${ typeId == Type.ADMIN}">
+						<c:choose>
+							<c:when test="${judgeMenuOfUser==1 }">
+								<li class="active">
+							</c:when>
+							<c:otherwise>
+								<li>
+							</c:otherwise>
+						</c:choose>
+						<a href="<spring:url value="/userList" />">ユーザー管理</a>
+						</li>
+					</c:if>
+				</ul>
 
-		<div class="collapse navbar-collapse" id="mynavbar">
-			<ul class="nav navbar-nav">
-				<li><a href="<spring:url value="/todayEvent" />">本日のイベント</a></li>
-				<li><a href="<spring:url value="/eventList" />">イベント管理</a></li>
-				<c:if test= "${ typeId == Type.ADMIN}">
-					<li><a href="<spring:url value="/userList" />">ユーザー管理</a></li>
-				</c:if>
-			</ul>
-
-			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<span class="glyphicon glyphicon-user"></span>
-						<c:out value="${userName}" />
-						<span class="caret"></span>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span>
+							<c:out value="${userName}" /> <span class="caret"></span>
 					</a>
-					<ul class="dropdown-menu">
-						<li><a href="<spring:url value="/logout" />">ログアウト</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
+						<ul class="dropdown-menu">
+							<li><a href="<spring:url value="/logout" />">ログアウト</a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</c:if>
 	</nav>
 </header>

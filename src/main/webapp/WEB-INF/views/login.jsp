@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 
@@ -11,7 +11,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link href="<spring:url value="/css/bootstrap.min.css" />" rel="stylesheet" />
+<link href="<spring:url value="/css/bootstrap.min.css" />"
+	rel="stylesheet" />
 <link href="<spring:url value="/css/style.css" />" rel="stylesheet" />
 <title>ログイン</title>
 </head>
@@ -19,21 +20,32 @@
 	<div class="container">
 		<form:errors path="user" />
 		<form:form modelAttribute="user">
-		<form:hidden  path="userName" value="tempName" />
+			<form:hidden path="userName" value="tempName" />
 			<div class="row">
-			<a class="navbar-brand" href="#">
-				<p class="text-primary"><strong>Event Manager</strong></p>
-			</a>
-				<div class="col-md-12">
-					<div class="form-group">
-						<form:input path="loginId" cssClass="form-control" placeholder="ログインID" />
-						<form:errors path="loginId" />
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							<strong class="text-primary">Event Manager</strong>
+						</h3>
 					</div>
-					<div class="form-group">
-						<form:input path="pass" type="password" cssClass="form-control" placeholder="パスワード" />
-						<form:errors path="pass" />
+					<div class="panel-body">
+						<div class="col-md-12">
+							<div class="form-group">
+								<form:input path="loginId" cssClass="form-control"
+									placeholder="ログインID" />
+								<form:errors path="loginId" />
+							</div>
+							<div class="form-group">
+								<form:input path="pass" type="password" cssClass="form-control"
+									placeholder="パスワード" />
+								<form:errors path="pass" />
+							</div>
+							<p>
+								<input type="submit" value="ログイン"
+									class="btn btn-primary btn-block">
+							</p>
+						</div>
 					</div>
-					<p><input type="submit" value="ログイン" class="btn btn-primary btn-block"></p>
 				</div>
 			</div>
 		</form:form>

@@ -1,7 +1,10 @@
 package com.example.event.domain;
 
+import javax.validation.constraints.Size;
+
 public class Group {
 	private Integer groupId;
+	@Size(max=45)
 	private String groupName;
 
 	public Integer getGroupId() {

@@ -16,14 +16,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.event.dao.GroupDao;
+import com.example.event.dao.JoinDao;
 import com.example.event.dao.TypeDao;
 import com.example.event.dao.UserDao;
 import com.example.event.domain.Group;
+import com.example.event.domain.Join;
 import com.example.event.domain.Type;
 import com.example.event.domain.User;
 
 @Controller
 public class UserController {
+
+	@Autowired
+	private JoinDao joinDao;
 
 	@Autowired
 	private UserDao userDao;
@@ -50,6 +55,8 @@ public class UserController {
 		int numPages = (int) Math.ceil(numUsers / 5); //ページ番号計算
 		model.addAttribute("numPages", numPages); //ページ番号をjspに返す(modelに格納)
 
+		int judgeMenuOfUser= 1;	//該当するページに判断用の値を渡る
+		model.addAttribute("judgeMenuOfUser", judgeMenuOfUser);
 		return "userList"; //userListにmodelに返す
 
 	}
@@ -63,6 +70,9 @@ public class UserController {
 		model.addAttribute("group", group);
 		List<Type> type = typeDao.findAll();
 		model.addAttribute("type", type);
+
+		int judgeMenuOfUser= 1;	//該当するページに判断用の値を渡る
+		model.addAttribute("judgeMenuOfUser", judgeMenuOfUser);
 		return "addUser";
 	}
 
@@ -92,6 +102,8 @@ public class UserController {
 	public String detail(@PathVariable("id") Integer userId, Model model) throws Exception {
 		User user = userDao.findById(userId);
 		model.addAttribute("user", user);
+		int judgeMenuOfUser= 1;	//該当するページに判断用の値を渡る
+		model.addAttribute("judgeMenuOfUser", judgeMenuOfUser);
 		return "detailsUser";
 	}
 
@@ -99,7 +111,12 @@ public class UserController {
 	@RequestMapping(value = "/delUser/{id}")
 	public String del(@PathVariable("id") Integer id, Model model, HttpSession session) throws Exception {
 		// 削除するユーザーを読み込む
-		User user = userDao.findById(id);
+		User user= userDao.findById(id);
+		// 予め、削除するユーザーの参加者情報を全て削除しておく
+		List<Join> joinList = joinDao.findByUser(user);
+		for (Join join : joinList) {
+		joinDao.delete(join);
+		}
 		// ユーザーを削除
 		userDao.delete(user);
 		return "delUser";
@@ -118,6 +135,8 @@ public class UserController {
 		model.addAttribute("group", group);
 		List<Type> type = typeDao.findAll();
 		model.addAttribute("type", type);
+		int judgeMenuOfUser= 1;	//該当するページに判断用の値を渡る
+		model.addAttribute("judgeMenuOfUser", judgeMenuOfUser);
 		return "editUser";
 	}
 

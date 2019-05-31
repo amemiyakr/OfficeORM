@@ -3,20 +3,24 @@ package com.example.event.domain;
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
 public class Event {
 	private Integer eventId;
 	@NotBlank
+	@Size(max=45)
 	private String title;
 	@NotNull
 	private Date startdate;
 	@NotNull
 	private Date enddate;
 	@NotBlank
+	@Size(max=45)
 	private String place;
 	private Group group;
+	@Size(max=60)
 	private String details;
 	private User user;
 	private Date createdate;

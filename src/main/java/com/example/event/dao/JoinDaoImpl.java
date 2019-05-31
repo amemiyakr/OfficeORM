@@ -53,6 +53,15 @@ public class JoinDaoImpl extends BaseDao implements JoinDao {
 				.add(Restrictions.eq("event", event))
 				.list();
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Join> findByUser(User user) throws Exception {
+		return getSession()
+				.createCriteria(Join.class)
+				.setFetchMode("event", FetchMode.JOIN)
+				.add(Restrictions.eq("user", user))
+				.list();
+	}
 
 	@Override
 	public Join findByUserAndEvent(User user, Event event) throws Exception {

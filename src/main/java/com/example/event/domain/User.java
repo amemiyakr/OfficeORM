@@ -2,15 +2,20 @@ package com.example.event.domain;
 
 import java.util.Date;
 
+import javax.validation.constraints.Size;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 public class User {
 	private Integer userId;
 	@NotBlank
+	@Size(max=45)
 	private String loginId;
 	@NotBlank
+	@Size(max=60)
 	private String pass;
 	@NotBlank
+	@Size(max=45)
 	private String userName;
 	private Type type;
 	private Group group;

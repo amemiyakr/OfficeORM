@@ -20,36 +20,36 @@
 			<div class="col-md-12">
 				<table class="table">
 					<tr>
-						<th>タイトル</th>
-						<td><c:out value="${event.title}" /></td>
+						<th class="col-md-2">タイトル</th>
+						<td class="col-md-10"><c:out value="${event.title}" /></td>
 					</tr>
 					<tr>
-						<th>開始日時</th>
-						<td><fmt:formatDate value="${event.startdate}" pattern="yyyy年MM月dd日(E) HH時mm分" /></td>
+						<th class="col-md-2">開始日時</th>
+						<td class="col-md-10"><fmt:formatDate value="${event.startdate}" pattern="yyyy年MM月dd日(E) HH時mm分" /></td>
 					</tr>
 					<tr>
-						<th>終了日時</th>
-						<td><fmt:formatDate value="${event.enddate}" pattern="yyyy年MM月dd日(E) HH時mm分" /></td>
+						<th class="col-md-2">終了日時</th>
+						<td class="col-md-10"><fmt:formatDate value="${event.enddate}" pattern="yyyy年MM月dd日(E) HH時mm分" /></td>
 					</tr>
 					<tr>
-						<th>場所</th>
-						<td><c:out value="${event.place}" /></td>
+						<th class="col-md-2">場所</th>
+						<td class="col-md-10"><c:out value="${event.place}" /></td>
 					</tr>
 					<tr>
-						<th>対象グループ</th>
-						<td><c:out value="${event.group.groupName}" /></td>
+						<th class="col-md-2">対象グループ</th>
+						<td class="col-md-10"><c:out value="${event.group.groupName}" /></td>
 					</tr>
 					<tr>
-						<th>詳細</th>
-						<td><c:out value="${event.details}" /></td>
+						<th class="col-md-2">詳細</th>
+						<td class="col-md-10"><c:out value="${event.details}" /></td>
 					</tr>
 					<tr>
-						<th>登録者</th>
-						<td><c:out value="${event.user.userName}" /></td>
+						<th class="col-md-2">登録者</th>
+						<td class="col-md-10"><c:out value="${event.user.userName}" /></td>
 					</tr>
 					<tr>
-						<th>参加者</th>
-						<td>
+						<th class="col-md-2">参加者</th>
+						<td class="col-md-10">
 							<c:forEach items="${joinList}" var="join" varStatus="joinStatus">
 								<c:out value="${join.user.userName}" /><c:if test="${joinStatus.last == false}">, </c:if>
 							</c:forEach>

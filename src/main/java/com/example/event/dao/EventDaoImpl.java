@@ -62,15 +62,12 @@ public class EventDaoImpl extends BaseDao implements EventDao {
 
 	@Override
 	public void update(Event event) throws Exception {
-		event.setCreatedate(new Date());
 		getSession().update(event);
-
 	}
 
 	@Override
 	public void delete(Event event) throws Exception {
 		getSession().delete(event);
-
 	}
 
 	@SuppressWarnings("unchecked") //ワーニングを出ないようにするアノテーション

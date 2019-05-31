@@ -69,6 +69,7 @@
 					</div>
 					<p>
 						<form:hidden path="user.userId" />
+						<form:hidden path="createdate" />
 
 						<a href="<spring:url value="/detailsEvent/${event.eventId}" />" class="btn btn-default">キャンセル</a>
 						 <input type="submit" value="登録" class="btn btn-primary">

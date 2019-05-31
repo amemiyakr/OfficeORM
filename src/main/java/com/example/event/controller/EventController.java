@@ -69,6 +69,8 @@ public class EventController {
 		List<Join> joinList = joinDao.findAll();
 		model.addAttribute("joinList", joinList);//すべてのJointableDBの中身をjspに返す
 
+		int judgeMenuOfEvent= 1;	//該当するページに判断用の値を渡る
+		model.addAttribute("judgeMenuOfEvent", judgeMenuOfEvent);
 		return "eventList";
 	}
 
@@ -86,6 +88,8 @@ public class EventController {
 		g.setGroupName("全員");
 		group.add(0, g); //対象グループの「全員」選択リスト
 		model.addAttribute("group", group);
+		int judgeMenuOfEvent= 1;	//該当するページに判断用の値を渡る
+		model.addAttribute("judgeMenuOfEvent", judgeMenuOfEvent);
 		return "addEvent";
 	}
 
@@ -145,6 +149,8 @@ public class EventController {
 		g.setGroupName("全員");
 		group.add(0, g); //対象グループの「全員」選択リスト
 		model.addAttribute("group", group);
+		int judgeMenuOfEvent= 1;	//該当するページに判断用の値を渡る
+		model.addAttribute("judgeMenuOfEvent", judgeMenuOfEvent);
 		return "editEvent";
 	}
 
@@ -214,6 +220,8 @@ public class EventController {
 		List<Join> joinList = joinDao.findAll();
 		model.addAttribute("joinList", joinList);//すべてのJointableDBの中身をjspに返す
 
+		int judgeMenuOfTodayEvent= 1;	//該当するページに判断用の値を渡る
+		model.addAttribute("judgeMenuOfTodayEvent", judgeMenuOfTodayEvent);
 		return "todayEvent";
 	}
 
@@ -233,6 +241,8 @@ public class EventController {
 		model.addAttribute("yourJoin", yourJoin);
 		// 管理ユーザーのタイプIDを取得
 		model.addAttribute("adminTypeId", Type.ADMIN);
+		int judgeMenuOfEvent= 1;	//該当するページに判断用の値を渡る
+		model.addAttribute("judgeMenuOfEvent", judgeMenuOfEvent);
 		return "detailsEvent";
 	}
 
